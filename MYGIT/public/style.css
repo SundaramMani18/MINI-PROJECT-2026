@@ -1,0 +1,276 @@
+/* ===== MYGIT Modern Dashboard ===== */
+
+:root {
+    --bg: #0b1020;
+    --surface: #131b2e;
+    --surface-light: #1b2640;
+    --border: #2b3855;
+    --text: #eef2ff;
+    --muted: #98a6c5;
+    --primary: #7c5cff;
+    --blue: #38bdf8;
+    --green: #34d399;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at top left,
+            #25204f 0%, transparent 40%),
+        radial-gradient(ellipse at bottom right,
+            #102c4b 0%, transparent 40%),
+        var(--bg);
+    line-height: 1.6;
+}
+
+/* Header */
+
+header {
+    text-align: center;
+    padding: 48px 20px 35px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(11, 16, 32, 0.55);
+}
+
+header h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+header h2 {
+    margin-top: 10px;
+    color: #ddd6fe;
+    font-size: 20px;
+}
+
+header p {
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* Main layout */
+
+main {
+    width: min(1000px, 92%);
+    margin: 35px auto;
+}
+
+.panel {
+    background: rgba(19, 27, 46, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+    transition: border-color 0.25s, transform 0.25s;
+    animation: appear 0.5s ease both;
+}
+
+.panel:hover {
+    border-color: #51438a;
+}
+
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #f5f3ff;
+}
+
+/* Command buttons */
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+button {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 19px;
+    background: linear-gradient(135deg, #7c5cff, #4f46e5);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(124, 92, 255, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s,
+                filter 0.2s;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(124, 92, 255, 0.3);
+    filter: brightness(1.12);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 4px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+    box-shadow: none;
+}
+
+/* Command output / terminal */
+
+#output,
+pre {
+    min-height: 130px;
+    padding: 20px;
+    border: 1px solid #26344f;
+    border-radius: 12px;
+    background: #080d18;
+    color: #a7f3d0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+#output:empty::before {
+    content: "Your Git command output will appear here...";
+    color: #64748b;
+}
+
+#output {
+    position: relative;
+}
+
+/* Form controls, if present */
+
+input,
+select,
+textarea {
+    max-width: 100%;
+    background: #080d18;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    padding: 11px 14px;
+    font: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #7c5cff;
+    outline-offset: 1px;
+}
+
+/* Links */
+
+a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #354260;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7c5cff;
+}
+
+/* Animation */
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsive design */
+
+@media (max-width: 600px) {
+    header {
+        padding: 35px 15px 25px;
+    }
+
+    main {
+        width: 94%;
+        margin: 22px auto;
+    }
+
+    .panel {
+        padding: 20px 16px;
+        border-radius: 14px;
+    }
+
+    .panel h2 {
+        font-size: 19px;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    button {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    #output,
+    pre {
+        padding: 14px;
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

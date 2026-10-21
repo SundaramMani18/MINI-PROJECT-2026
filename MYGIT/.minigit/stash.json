@@ -1,0 +1,12 @@
+[
+  {
+    "id": "fae4d0287a85525c688409393455ede4831a9935",
+    "timestamp": "2026-10-21T21:19:35.331Z",
+    "files": {
+      "hello.txt": {
+        "content": "Changed content!\r\n",
+        "hash": "3dfa5f165b08f71077e6f91886f9734356ce96af"
+      }
+    }
+  }
+]

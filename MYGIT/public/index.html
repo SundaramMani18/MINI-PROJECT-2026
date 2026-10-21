@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Git Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Mini Git Clone</h1>
+    <h2>MYGIT</h2>
+    <p>A simple version-control dashboard</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Repository Commands</h2>
+
+      <div class="buttons">
+        <button data-command="status">Status</button>
+        <button data-command="log">Commit History</button>
+        <button data-command="branch">Branches</button>
+        <button data-command="tag">Tags</button>
+        <button data-command="stash list">Stash List</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Command Output</h2>
+      <pre id="output">Welcome! Select a command above.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
