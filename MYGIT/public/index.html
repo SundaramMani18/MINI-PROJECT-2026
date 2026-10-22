@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,14 +10,12 @@
 <body>
   <header>
     <h1>Mini Git Clone</h1>
-    <h2>MYGIT</h2>
-    <p>A simple version-control dashboard</p>
+    <p>Your lightweight version-control dashboard</p>
   </header>
 
   <main>
     <section class="panel">
       <h2>Repository Commands</h2>
-
       <div class="buttons">
         <button data-command="status">Status</button>
         <button data-command="log">Commit History</button>
@@ -28,8 +26,45 @@
     </section>
 
     <section class="panel">
+      <div class="section-heading">
+        <h2>File Manager</h2>
+        <button id="refresh-files" class="secondary">
+          Refresh Files
+        </button>
+      </div>
+
+      <p class="muted">
+        Select a project file, then stage it for your next commit.
+      </p>
+
+      <div id="file-message" role="status" aria-live="polite">
+        Loading project files...
+      </div>
+
+      <ul id="file-list" class="file-list"></ul>
+
+      <button id="stage-file" disabled>Stage Selected File</button>
+    </section>
+    
+<section class="panel">
+  <h2>Create Commit</h2>
+  <p>Save your staged changes with a commit message.</p>
+
+  <input
+    type="text"
+    id="commit-message"
+    placeholder="Enter commit message..."
+    maxlength="200"
+  />
+
+  <button id="commit-button">Commit</button>
+  <p id="commit-message-status" role="status"></p>
+</section>
+
+
+    <section class="panel">
       <h2>Command Output</h2>
-      <pre id="output">Welcome! Select a command above.</pre>
+      <pre id="output" aria-live="polite">Welcome! Select a command or stage a file.</pre>
     </section>
   </main>
 
