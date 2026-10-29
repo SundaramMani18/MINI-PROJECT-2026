@@ -1,11 +1,12 @@
 
+
 const fs = require("fs");
 const path = require("path");
+const { getRepoPath } = require("./repo-path");
 
 function showLog() {
   const commitsPath = path.join(
-    process.cwd(),
-    ".minigit",
+    getRepoPath(),
     "commits.json"
   );
 

@@ -1,9 +1,10 @@
 
 const fs = require("fs");
 const path = require("path");
+const { getRepoPath } = require("./repo-path");
 
 function manageTag(tagName) {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
   const commitsPath = path.join(repoPath, "commits.json");
   const tagsPath = path.join(repoPath, "tags.json");
 
@@ -75,4 +76,3 @@ function manageTag(tagName) {
 }
 
 module.exports = { manageTag };
-

@@ -1,9 +1,12 @@
 
+
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
+const { getRepoPath } = require("./repo-path");
 
 function mergeBranch(branchName) {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
   const commitsPath = path.join(repoPath, "commits.json");
   const headPath = path.join(repoPath, "HEAD");
   const branchesPath = path.join(repoPath, "refs", "heads");
@@ -13,8 +16,13 @@ function mergeBranch(branchName) {
     throw new Error("Repository not initialized. Run init first.");
   }
 
-  if (!branchName) {
-    throw new Error("Please specify a branch to merge.");
+  if (
+    typeof branchName !== "string" ||
+    !/^[a-zA-Z0-9._-]+$/.test(branchName) ||
+    branchName === "." ||
+    branchName === ".."
+  ) {
+    throw new Error("Invalid branch name.");
   }
 
   const head = fs.readFileSync(headPath, "utf8").trim();
@@ -26,11 +34,24 @@ function mergeBranch(branchName) {
 
   const currentBranch = head.slice(prefix.length);
 
+  if (
+    !/^[a-zA-Z0-9._-]+$/.test(currentBranch) ||
+    currentBranch === "." ||
+    currentBranch === ".."
+  ) {
+    throw new Error("Invalid current branch reference.");
+  }
+
   if (branchName === currentBranch) {
     throw new Error("Cannot merge a branch into itself.");
   }
 
+  const currentPath = path.join(branchesPath, currentBranch);
   const targetPath = path.join(branchesPath, branchName);
+
+  if (!fs.existsSync(currentPath)) {
+    throw new Error("Current branch reference does not exist.");
+  }
 
   if (!fs.existsSync(targetPath)) {
     throw new Error(`Branch '${branchName}' does not exist.`);
@@ -48,22 +69,34 @@ function mergeBranch(branchName) {
     throw new Error("No commits found.");
   }
 
+  const currentCommitId = fs.readFileSync(
+    currentPath,
+    "utf8"
+  ).trim();
+
   const targetCommitId = fs.readFileSync(
     targetPath,
     "utf8"
   ).trim();
 
+  const currentCommit = commits.find(
+    commit => commit.id === currentCommitId
+  );
+
   const targetCommit = commits.find(
     commit => commit.id === targetCommitId
   );
 
-  if (!targetCommitId || !targetCommit) {
+  if (!currentCommit) {
+    throw new Error("Current branch has no valid commit reference.");
+  }
+
+  if (!targetCommit) {
     throw new Error(
       `Branch '${branchName}' has no valid commit reference.`
     );
   }
 
-  // Avoid merging if staged changes exist.
   if (fs.existsSync(indexPath)) {
     const index = JSON.parse(
       fs.readFileSync(indexPath, "utf8")
@@ -76,17 +109,15 @@ function mergeBranch(branchName) {
     }
   }
 
-  // This starter version records a merge commit.
-  // It does not yet perform a three-way file merge.
+  // Starter version: records a merge commit.
+  // It does not perform a three-way file merge.
   const mergeCommit = {
     message: `Merge branch '${branchName}' into '${currentBranch}'`,
     timestamp: new Date().toISOString(),
     files: targetCommit.files,
-    parent: commits[commits.length - 1].id,
+    parent: currentCommit.id,
     mergedParent: targetCommit.id
   };
-
-  const crypto = require("crypto");
 
   const content = JSON.stringify(mergeCommit);
 
@@ -95,8 +126,11 @@ function mergeBranch(branchName) {
     .update(content)
     .digest("hex");
 
+  const objectsPath = path.join(repoPath, "objects");
+  fs.mkdirSync(objectsPath, { recursive: true });
+
   fs.writeFileSync(
-    path.join(repoPath, "objects", mergeCommit.id),
+    path.join(objectsPath, mergeCommit.id),
     JSON.stringify(mergeCommit, null, 2)
   );
 
@@ -107,17 +141,13 @@ function mergeBranch(branchName) {
     JSON.stringify(commits, null, 2)
   );
 
-  fs.writeFileSync(
-    targetPath,
-    mergeCommit.id
-  );
+  // Update the CURRENT branch, not the branch being merged in.
+  fs.writeFileSync(currentPath, mergeCommit.id);
 
   console.log(
     `Merged '${branchName}' into '${currentBranch}'.`
   );
-  console.log(
-    `Merge commit: ${mergeCommit.id.slice(0, 7)}`
-  );
+  console.log(`Merge commit: ${mergeCommit.id.slice(0, 7)}`);
 }
 
 module.exports = { mergeBranch };

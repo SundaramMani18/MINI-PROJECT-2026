@@ -1,0 +1,11 @@
+.env
+node_modules/
+.minigit/
+# MiniGit internal repository data
+/MYGIT/.minigit/
+
+# Node.js dependencies
+/node_modules/
+
+# Environment secrets
+.env

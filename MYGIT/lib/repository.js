@@ -1,9 +1,11 @@
 
+
 const fs = require("fs");
 const path = require("path");
+const { getRepoPath } = require("./repo-path");
 
 function initRepository() {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
 
   if (fs.existsSync(repoPath)) {
     console.log("Mini Git repository already exists.");
@@ -11,11 +13,11 @@ function initRepository() {
   }
 
   fs.mkdirSync(path.join(repoPath, "objects"), {
-    recursive: true,
+    recursive: true
   });
 
   fs.mkdirSync(path.join(repoPath, "refs", "heads"), {
-    recursive: true,
+    recursive: true
   });
 
   fs.writeFileSync(

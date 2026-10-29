@@ -2,9 +2,10 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const { getRepoPath } = require("./repo-path");
 
 function addFile(filePath) {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
   const objectsPath = path.join(repoPath, "objects");
   const indexPath = path.join(repoPath, "index");
 

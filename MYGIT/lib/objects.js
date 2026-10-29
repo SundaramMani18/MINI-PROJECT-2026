@@ -2,9 +2,10 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const { getRepoPath } = require("./repo-path");
 
 function getObjectsPath() {
-  return path.join(process.cwd(), ".minigit", "objects");
+  return path.join(getRepoPath(), "objects");
 }
 
 function hashObject(filePath) {
@@ -15,8 +16,6 @@ function hashObject(filePath) {
   }
 
   const content = fs.readFileSync(filePath);
-
-  // Git-style header: blob <size>\0
   const header = Buffer.from(`blob ${content.length}\0`);
   const objectData = Buffer.concat([header, content]);
 
@@ -36,6 +35,10 @@ function hashObject(filePath) {
 }
 
 function catFile(option, hash) {
+  if (!/^[a-f0-9]{40}$/.test(hash || "")) {
+    throw new Error("Invalid object hash.");
+  }
+
   const objectPath = path.join(getObjectsPath(), hash);
 
   if (!fs.existsSync(objectPath)) {

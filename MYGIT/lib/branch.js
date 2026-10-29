@@ -1,9 +1,7 @@
+
 const fs = require("fs");
 const path = require("path");
-
-function getRepoPath() {
-  return path.join(process.cwd(), ".minigit");
-}
+const { getRepoPath } = require("./repo-path");
 
 function getHeadBranch() {
   const headPath = path.join(getRepoPath(), "HEAD");

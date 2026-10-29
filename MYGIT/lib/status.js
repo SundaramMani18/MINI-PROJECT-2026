@@ -2,6 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const { getRepoPath } = require("./repo-path");
 
 function getFileHash(filePath) {
   const content = fs.readFileSync(filePath);
@@ -15,7 +16,7 @@ function getFileHash(filePath) {
 }
 
 function showStatus() {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
   const indexPath = path.join(repoPath, "index");
 
   if (!fs.existsSync(repoPath)) {
@@ -25,9 +26,7 @@ function showStatus() {
   let stagedFiles = {};
 
   if (fs.existsSync(indexPath)) {
-    stagedFiles = JSON.parse(
-      fs.readFileSync(indexPath, "utf8")
-    );
+    stagedFiles = JSON.parse(fs.readFileSync(indexPath, "utf8"));
   }
 
   console.log("\nMini Git Status");

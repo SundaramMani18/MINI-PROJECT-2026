@@ -2,10 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-
-function getRepoPath() {
-  return path.join(process.cwd(), ".minigit");
-}
+const { getRepoPath } = require("./repo-path");
 
 function stashChanges() {
   const repoPath = getRepoPath();
@@ -31,7 +28,7 @@ function stashChanges() {
   const files = {};
 
   for (const [filePath, hash] of Object.entries(index)) {
-    if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
       throw new Error(`File not found: ${filePath}`);
     }
 
@@ -65,7 +62,6 @@ function stashChanges() {
     JSON.stringify(stashes, null, 2)
   );
 
-  // Remove staged entries and restore the saved file content.
   fs.writeFileSync(indexPath, JSON.stringify({}, null, 2));
 
   console.log(`Saved stash ${id.slice(0, 7)}.`);
@@ -112,14 +108,14 @@ function applyStash() {
   }
 
   const stash = stashes[stashes.length - 1];
+  const workspacePath = path.resolve(process.cwd());
 
   for (const [filePath, saved] of Object.entries(stash.files)) {
     const absolutePath = path.resolve(filePath);
-    const rootPath = path.resolve(process.cwd());
 
     if (
-      absolutePath !== rootPath &&
-      !absolutePath.startsWith(rootPath + path.sep)
+      absolutePath !== workspacePath &&
+      !absolutePath.startsWith(workspacePath + path.sep)
     ) {
       throw new Error("Invalid file path in stash.");
     }

@@ -155,7 +155,196 @@ pre {
     padding: 16px;
   }
 
+/* Visual Commit History */
+.commit-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.commit-card {
+  position: relative;
+  padding: 18px;
+  background: #111827;
+  border: 1px solid #374151;
+  border-left: 4px solid #60a5fa;
+  border-radius: 10px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.commit-card:hover {
+  border-color: #60a5fa;
+  transform: translateY(-2px);
+}
+
+
+
+/*.commit-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.commit-card-message {
+  margin: 0;
+  color: #f9fafb;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+.commit-card-badge {
+  padding: 5px 9px;
+  background: #1e3a8a;
+  color: #bfdbfe;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.commit-card-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.commit-detail {
+  min-width: 0;
+}
+
+.commit-detail-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.commit-detail-value {
+  color: #e5e7eb;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.commit-id {
+  font-family: Consolas, monospace;
+  color: #93c5fd;
+}
+
+.commit-files {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #374151;
+  color: #a7f3d0;
+  font-size: 13px;
+}
+
+#history-message {
+  margin-top: 12px;
+  color: #d1d5db;
+}
+
+#history-message:empty {
+  display: none;
+}
+
+.history-empty {
+  padding: 24px 16px;
+  border: 1px dashed #4b5563;
+  border-radius: 8px;
+  color: #d1d5db;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .commit-card {
+    padding: 14px;
+  }*/
+
+.commit-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.commit-card-message {
+  margin: 0;
+  color: #f9fafb;
+  font-size: 18px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.commit-card-badge {
+  padding: 5px 10px;
+  background: #1e3a8a;
+  color: #bfdbfe;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.commit-card-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.commit-detail {
+  min-width: 0;
+  padding: 10px;
+  background: #1f2937;
+  border-radius: 7px;
+}
+
+.commit-detail-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.commit-detail-value {
+  display: block;
+  color: #e5e7eb;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.commit-id {
+  font-family: Consolas, monospace;
+  color: #93c5fd;
+}
+
+.commit-files {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #374151;
+  color: #a7f3d0;
+  font-size: 13px;
+}
+
+@media (max-width: 520px) {
+  .commit-card-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+  .commit-card-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+
   .buttons button {
     flex: 1 1 40%;
   }
-}
+

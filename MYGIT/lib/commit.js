@@ -2,9 +2,10 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const { getRepoPath } = require("./repo-path");
 
 function commitChanges(message) {
-  const repoPath = path.join(process.cwd(), ".minigit");
+  const repoPath = getRepoPath();
   const indexPath = path.join(repoPath, "index");
   const objectsPath = path.join(repoPath, "objects");
   const commitsPath = path.join(repoPath, "commits.json");
@@ -71,4 +72,3 @@ function commitChanges(message) {
 }
 
 module.exports = { commitChanges };
-

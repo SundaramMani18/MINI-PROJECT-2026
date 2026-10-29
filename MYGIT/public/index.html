@@ -1,5 +1,5 @@
 
-<html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,9 +13,84 @@
     <p>Your lightweight version-control dashboard</p>
   </header>
 
+
   <main>
-    <section class="panel">
-      <h2>Repository Commands</h2>
+    <section class="panel" id="auth-panel">
+      <h2>Welcome to Mini Git</h2>
+      <p>Log in or create an account to access your dashboard.</p>
+
+      <form id="login-form">
+        <h3>Log In</h3>
+        <label for="login-username">Username</label>
+        <input
+          type="text"
+          id="login-username"
+          name="username"
+          minlength="3"
+          maxlength="30"
+          autocomplete="username"
+          required
+        />
+
+        <label for="login-password">Password</label>
+        <input
+          type="password"
+          id="login-password"
+          name="password"
+          maxlength="72"
+          autocomplete="current-password"
+          required
+        />
+
+        <button type="submit">Log In</button>
+      </form>
+
+      <hr>
+
+      <form id="register-form">
+        <h3>Create Account</h3>
+        <label for="register-username">Username</label>
+        <input
+          type="text"
+          id="register-username"
+          name="username"
+          minlength="3"
+          maxlength="30"
+          pattern="[A-Za-z0-9_]{3,30}"
+          autocomplete="username"
+          required
+        />
+
+        <label for="register-password">Password</label>
+        <input
+          type="password"
+          id="register-password"
+          name="password"
+          minlength="8"
+          maxlength="72"
+          autocomplete="new-password"
+          required
+        />
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p id="auth-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="dashboard" hidden>
+      <section class="panel">
+        <div class="section-heading">
+          <h2 id="logged-in-user">Repository Dashboard</h2>
+          <button id="logout-button" class="secondary" type="button">
+            Log Out
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Repository Commands</h2>
+
       <div class="buttons">
         <button data-command="status">Status</button>
         <button data-command="log">Commit History</button>
@@ -45,22 +120,40 @@
 
       <button id="stage-file" disabled>Stage Selected File</button>
     </section>
-    
-<section class="panel">
-  <h2>Create Commit</h2>
-  <p>Save your staged changes with a commit message.</p>
 
-  <input
-    type="text"
-    id="commit-message"
-    placeholder="Enter commit message..."
-    maxlength="200"
-  />
+    <section class="panel">
+      <h2>Create Commit</h2>
+      <p>Save your staged changes with a commit message.</p>
 
-  <button id="commit-button">Commit</button>
-  <p id="commit-message-status" role="status"></p>
-</section>
+      <input
+        type="text"
+        id="commit-message"
+        placeholder="Enter commit message..."
+        maxlength="200"
+      />
 
+      <button id="commit-button">Commit</button>
+      <p id="commit-message-status" role="status"></p>
+    </section>
+
+    <!-- New visual Commit History panel -->
+    <section class="panel" id="commit-history-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Commit History</h2>
+          <p class="muted">Review your repository's saved commits.</p>
+        </div>
+        <button id="refresh-history" class="secondary">
+          Refresh History
+        </button>
+      </div>
+
+      <div id="history-message" role="status" aria-live="polite">
+        Click Refresh History to load your commits.
+      </div>
+
+      <div id="commit-history-list" class="commit-history-list"></div>
+    </section>
 
     <section class="panel">
       <h2>Command Output</h2>
@@ -71,3 +164,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+

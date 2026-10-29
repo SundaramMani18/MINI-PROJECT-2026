@@ -1,9 +1,0 @@
-{
-  "message": "My first commit",
-  "timestamp": "2026-10-21T20:05:05.537Z",
-  "files": {
-    "hello.txt": "46b11374a9a28778d002deab905b69b77c342d16"
-  },
-  "parent": null,
-  "id": "0be983e953930157c6f8e8cf0014b9ce474f04f3"
-}
